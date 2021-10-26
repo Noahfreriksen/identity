@@ -24,6 +24,7 @@ global.currentImage = "";
  app.set("view engine", "pug");
  app.use(express.static(__dirname+'/avatars'));
  app.use(bodyParser.json());
+ app.set('trust proxy', true);
 
 /**
  * Routes Definitions
@@ -55,7 +56,7 @@ app.get("/getImage", (req, res) =>
         type: 'file',  // Type of file to generate (file or base64) (default file)
         path: 'avatars' // Path to save (Applies to type file) (default .)
     }).then(ress  => {
-        console.log(ress.data.name);
+        console.log(req.ip);
         currentImage = ress.data.name;
         res.status(200).send(JSON.stringify(currentImage));
         /*
@@ -75,11 +76,6 @@ app.get("/getImage", (req, res) =>
     }).catch(err  => {
         console.log('error->', err);
     });
-
-    // const dir = __dirname + '/public'
-    // const files = fs.readdirSync(dir)
-    // currentImage = files[0];
-    // res.status(200).send(JSON.stringify(files[0]));
 });
 
 app.post("/confirm", (req, res) => 
