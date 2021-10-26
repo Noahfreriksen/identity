@@ -48,6 +48,20 @@ app.get("/getFeatures", (req, res) =>
 
 app.get("/getImage", (req, res) => 
 {
+    // Check if client has an image in avatars that need to be removed
+    if (currentImage.has(req.ip))
+    {
+        console.log("Delete image");
+        fs.unlink('avatars/'  + currentImage.get(req.ip), (err) => 
+        {
+            if (err) {
+                console.error(err)
+                return
+            }
+        });
+
+    }
+
     const dnte = new ThisPersonDoesNotExist();
 
     dnte.getImage({
