@@ -124,18 +124,6 @@ app.post("/confirm", (req, res) =>
         );
     }
 
-    if (currentImage.get(req.ip).length > 1)
-    {
-        console.log("deleted");
-        fs.unlink(sDir  + currentImage.get(req.ip), (err) => 
-        {
-            if (err) {
-                console.error(err)
-                return
-            }
-        });
-    }
-
     res.status(200).send("ok");
 });
 
