@@ -1,0 +1,20 @@
+{
+  "name": "identitymatch",
+  "version": "1.0.0",
+  "description": "identity checker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Noah Freriksen",
+  "license": "ISC",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "pug": "^3.0.2",
+    "sharp": "^0.23.2",
+    "thispersondoesnotexist-js": "^1.0.4"
+  },
+  "packageManager": "yarn@3.1.0"
+}
