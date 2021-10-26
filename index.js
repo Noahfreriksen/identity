@@ -14,8 +14,8 @@
  */
  const app = express();
  const port = process.env.PORT || "8000";
-global.currentImage = "";
 
+global.currentImage = new Map();
 
 /**
  *  App Configuration
@@ -57,8 +57,8 @@ app.get("/getImage", (req, res) =>
         path: 'avatars' // Path to save (Applies to type file) (default .)
     }).then(ress  => {
         console.log(req.ip);
-        currentImage = ress.data.name;
-        res.status(200).send(JSON.stringify(currentImage));
+        currentImage.set(req.ip, ress.data.name)
+        res.status(200).send(JSON.stringify(currentImage.get(req.ip)));
         /*
         { 
             status: true,
@@ -94,8 +94,8 @@ app.post("/confirm", (req, res) =>
         
         fs.copyFileSync
         (
-            sDir + currentImage, 
-            dDir + currentImage,
+            sDir + currentImage.get(req.ip), 
+            dDir + currentImage.get(req.ip),
             (err) => 
             {
                 if (err)
@@ -110,10 +110,10 @@ app.post("/confirm", (req, res) =>
         );
     }
 
-    if (currentImage.length > 1)
+    if (currentImage.get(req.ip).length > 1)
     {
         console.log("deleted");
-        fs.unlink(sDir  + currentImage, (err) => 
+        fs.unlink(sDir  + currentImage.get(req.ip), (err) => 
         {
             if (err) {
                 console.error(err)
