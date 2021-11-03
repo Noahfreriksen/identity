@@ -1,19 +1,43 @@
+body
+{
+    background-image: url('neural.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
 .feature-button
 {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
+    padding: 1em 2.1em 1.1em;
+    border-radius: 3px;
+    margin: 8px 8px 8px 8px;
+    color: #fbdedb;
+    display: inline-block;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    font-family: sans-serif;
+    font-weight: 800;
+    font-size: .65em;
+    text-transform: uppercase;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 2px;
+    -webkit-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.1) inset;
+    position: relative;
+}
+
+.feature-button:hover
+{
+    color:#2ddb9e;
+    background-color:#FFFFFF;
 }
 
 .unselected
 {
-    background-color: #7fb181; /* Green */
+    background-color: #2ddb9e; /* Green */
 }
 
 .selected
@@ -23,5 +47,79 @@
 
 .confirm
 {
-    background-color: #af954c;
+    background-color: #28c48d;
+}
+
+.featureList
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100vw;
+    text-align:center;
+    padding: 20px, 20px, 20px, 20px;
+}
+
+@media screen and (max-width: 90vh) 
+{
+    .image
+    {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 60vw;
+        width: 60vw;
+    }
+    
+}
+
+.title {
+    font-family: "Montserrat";
+    text-align: center;
+    color: #FFF;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  
+  h1 {
+      
+    background-image: url(https://media1.giphy.com/media/n3xSURtNE62t2/giphy.gif?cid=ecf05e47vvz2mfckm5uhem0srqwmdip1j3ngtvb8vjyp0g87&rid=giphy.gif&ct=g);
+    background-size: cover;
+    background-position: center;
+    color: transparent;
+    -moz-background-clip: text;
+    -webkit-background-clip: text;
+    text-transform: uppercase;
+    font-size: 7vw;
+    line-height: .75;
+    margin: 10px 0;
+  }
+
+@media screen and (min-width: 650px) 
+{
+    h1 {
+        font-size: 3vw;
+    }
+}
+@media screen and (min-width: 90vh) 
+{
+    .image
+    {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 60vh;
+        width: 60vh;
+    }
+}
+
+.confirm
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
