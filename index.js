@@ -7,6 +7,9 @@ const ThisPersonDoesNotExist = require("thispersondoesnotexist-js")
 const path = require("path");
 const fs = require('fs')
 var bodyParser = require('body-parser');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
 /**
  * App Variables
@@ -28,6 +31,10 @@ app.set('trust proxy', true);
 /**
  * Routes Definitions
  */
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
+
 app.get("/", (req, res) => {
     res.status(200).sendFile(__dirname + '/views/vote.html');
 });
