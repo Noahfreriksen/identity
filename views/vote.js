@@ -103,7 +103,6 @@ function confirm()
     {
         if (res.ok) 
         {
-            getNewImage();
             getNewFeatures();
         }
     });
