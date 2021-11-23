@@ -28,6 +28,7 @@ function getNewFeatures()
                         btn.classList.remove('unselected');
                         btn.classList.add('selected');
                     }
+                    confirm();
                 });
             }());
         }
