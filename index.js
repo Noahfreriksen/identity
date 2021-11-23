@@ -7,16 +7,16 @@ const ThisPersonDoesNotExist = require("thispersondoesnotexist-js")
 const path = require("path");
 const fs = require('fs')
 var bodyParser = require('body-parser');
-var http = require("http");
-const { Server } = require("socket.io");
 
 /**
  * App Variables
  */
-const app = express();
 const port = process.env.PORT || "7777";
 const server = http.createServer(app);
-const io = new Server(server);
+
+const app = express();
+const http = require("http").createServer(app);
+const io = require("socket.io").listen(http);
 
 global.currentImage = new Map();
 
