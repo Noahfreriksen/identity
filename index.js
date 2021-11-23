@@ -2,7 +2,9 @@
 /**
  * Required External Modules
  */
-const express = require("express");
+var express = require("express");
+var http = require("http");
+
 const ThisPersonDoesNotExist = require("thispersondoesnotexist-js")
 const path = require("path");
 const fs = require('fs')
@@ -11,12 +13,12 @@ var bodyParser = require('body-parser');
 /**
  * App Variables
  */
+var app = express();
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
 const port = process.env.PORT || "7777";
 const server = http.createServer(app);
-
-const app = express();
-const http = require("http").createServer(app);
-const io = require("socket.io").listen(http);
+server.listen(port);
 
 global.currentImage = new Map();
 
