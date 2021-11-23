@@ -37,23 +37,7 @@ function getNewFeatures()
     });
 }
 
-function getNewImage()
-{
-    fetch('/getImage').then(response => 
-    {
-        return response.json();
-    }).then(data => 
-    {
-        var img = document.getElementById("portrait");
-        img.src = data;
-    }).catch(err => 
-    {
-        console.log(err)
-    });
-}
-
 getNewFeatures();
-getNewImage();
 
 var form = document.getElementById("form");
 var button = form.appendChild(newElement('button', 'Confirm', 'feature-button confirm', 'confirm'));
