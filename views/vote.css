@@ -36,11 +36,6 @@ body
     position: relative;
 }
 
-.feature-button:hover
-{
-    color:#2ddb9e;
-}
-
 .unselected
 {
     background-color: #2ddb9e; /* Green */
