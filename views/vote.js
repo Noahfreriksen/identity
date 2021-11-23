@@ -41,7 +41,7 @@ function getNewFeatures()
 getNewFeatures();
 
 var form = document.getElementById("form");
-var button = form.appendChild(newElement('button', 'Confirm', 'feature-button confirm', 'confirm'));
+var button = form.appendChild(newElement('button', 'None of the above', 'feature-button confirm', 'confirm'));
 
 button.addEventListener('click', function () 
 {
