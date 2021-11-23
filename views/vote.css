@@ -14,6 +14,7 @@ body
 
 .feature-button
 {
+    width: 30vw;
     padding: 1em 2.1em 1.1em;
     border-radius: 3px;
     margin: 8px 8px 8px 8px;
@@ -25,7 +26,7 @@ body
     transition: 0.3s;
     font-family: sans-serif;
     font-weight: 800;
-    font-size: .65em;
+    font-size: calc(16px + 3 * ((100vw - 320px) / 680));
     text-transform: uppercase;
     text-align: center;
     text-decoration: none;
@@ -61,10 +62,9 @@ body
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 100vw;
     height: 100%;
     text-align:center;
-    padding: 20px, 20px, 20px, 20px;
+    margin-top: 40vh;
 }
 
 @media screen and (max-width: 90vh) 
