@@ -40,6 +40,18 @@ app.get("/vote.css", (req, res) => {
     res.status(200).sendFile(__dirname + '/views/vote.css');
 });
 
+app.get("/tv.html", (req, res) => {
+    res.status(200).sendFile(__dirname + '/views/tv.html');
+});
+
+app.get("/tv.js", (req, res) => {
+    res.status(200).sendFile(__dirname + '/views/tv.js');
+});
+
+app.get("/tv.css", (req, res) => {
+    res.status(200).sendFile(__dirname + '/views/tv.css');
+});
+
 app.get("/neural.png", (req, res) => {
     res.status(200).sendFile(__dirname + '/neural.png');
 });
