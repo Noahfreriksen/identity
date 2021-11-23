@@ -12,7 +12,7 @@ var bodyParser = require('body-parser');
  * App Variables
  */
 const app = express();
-const port = process.env.PORT || "8000";
+const port = process.env.PORT || "7777";
 
 global.currentImage = new Map();
 
