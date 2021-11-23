@@ -7,6 +7,7 @@ const ThisPersonDoesNotExist = require("thispersondoesnotexist-js")
 const path = require("path");
 const fs = require('fs')
 var bodyParser = require('body-parser');
+var http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
