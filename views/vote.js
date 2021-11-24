@@ -63,7 +63,7 @@ buttonFS.addEventListener("click", function() {
     else if (docElm.msRequestFullscreen) {
         docElm.msRequestFullscreen();
     }
-    btnFullscreen.style.display = "none";
+    buttonFS.style.display = "none";
 
 }, false);
 
