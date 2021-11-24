@@ -11,7 +11,8 @@ const port = process.env.PORT || "7777";
 var server = http.createServer(app);
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 
-server.listen(5555, ipaddress, function(){
+server.listen(7777, ipaddress, function(){
+    console.log(ipaddress);
     console.log("running server");
 })
 
@@ -150,6 +151,6 @@ app.post("/confirm", (req, res) => {
 /**
  * Server Activation
  */
-app.listen(port, () => {
-    console.log(`Listening to requests on http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`Listening to requests on http://localhost:${port}`);
+// });
