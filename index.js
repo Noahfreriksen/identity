@@ -12,12 +12,14 @@ const path = require("path");
 const fs = require('fs')
 var bodyParser = require('body-parser');
 var https = require('https');
+var http = require('http');
 
 var options = {
     key: fs.readFileSync(path.join(__dirname, '/key.pem')),
     cert: fs.readFileSync(path.join(__dirname, '/cert.pem'))
 };
 
+http.createServer(app).listen(9999);
 https.createServer(options, app).listen(port);
 
 /**
