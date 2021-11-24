@@ -42,7 +42,7 @@ getNewFeatures();
 
 var form = document.getElementById("form");
 var button = form.appendChild(newElement('button', 'None of the above', 'feature-button confirm', 'confirm'));
-var buttonFS = form.appendChild(newElement('button', 'None of the above', 'feature-button confirm', 'confirm'));
+var buttonFS = form.appendChild(newElement('button', 'Fullscreen', 'feature-button confirm', 'confirm'));
 
 button.addEventListener('click', function () 
 {
@@ -63,7 +63,7 @@ buttonFS.addEventListener("click", function() {
     else if (docElm.msRequestFullscreen) {
         docElm.msRequestFullscreen();
     }
-    btnFullscreen.style.visibility = 'hidden';
+    btnFullscreen.style.display = "none";
 
 }, false);
 
