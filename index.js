@@ -35,10 +35,6 @@ app.use(express.static(__dirname + '/avatars'));
 app.use(bodyParser.json());
 app.set('trust proxy', true);
 
-pusher.trigger("my-channel", "my-event", {
-    message: "hello world"
-  });
-
 /**
  * Routes Definitions
  */
@@ -139,11 +135,12 @@ app.post("/confirm", (req, res) => {
                     }
                     else {
                         console.log('source was copied to destination');
+                        console.log(dDir);
                     }
                 }
             );
     }
-
+    pusher.trigger("my-channel", "newImage", {});
     res.status(200).send("ok");
 });
 

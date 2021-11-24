@@ -1,3 +1,16 @@
+var form = document.getElementById("form");
+getNewImage();
+
+var pusher = new Pusher('eece33e6915f81081df4', {
+    cluster: 'eu'
+});
+
+var channel = pusher.subscribe('my-channel');
+
+channel.bind('newImage', function(data) {
+    getNewImage();
+});
+
 function getNewImage()
 {
     fetch('/getImage').then(response => 
@@ -12,10 +25,6 @@ function getNewImage()
         console.log(err)
     });
 }
-
-getNewImage();
-
-var form = document.getElementById("form");
 
 function newElement(tagName, TextContent, ClassName, name) {
     var nTag = document.createElement(tagName);

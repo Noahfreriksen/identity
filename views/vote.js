@@ -1,13 +1,3 @@
-var pusher = new Pusher('eece33e6915f81081df4', {
-    cluster: 'eu'
-});
-
-var channel = pusher.subscribe('my-channel');
-
-channel.bind('my-event', function(data) {
-    alert(JSON.stringify(data));
-});
-
 function getNewFeatures()
 {
     fetch('/getFeatures').then(response => 
