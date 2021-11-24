@@ -1,3 +1,7 @@
+const socket = io({
+    transports: ["websocket"]
+});
+
 function getNewFeatures()
 {
     fetch('/getFeatures').then(response => 
