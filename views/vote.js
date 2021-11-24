@@ -1,6 +1,4 @@
-const socket = io({
-    transports: ["websocket"]
-});
+const socket = io();
 
 function getNewFeatures()
 {
