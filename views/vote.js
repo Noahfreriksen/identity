@@ -1,6 +1,3 @@
-import { io } from "/socket.io-client";
-var socket = io();
-
 function getNewFeatures()
 {
     fetch('/getFeatures').then(response => 
