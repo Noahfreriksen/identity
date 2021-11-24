@@ -13,7 +13,7 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "pug": "^3.0.2",
-    "sharp": "^0.23.2",
+    "sharp": "^0.21.3",
     "thispersondoesnotexist-js": "^1.0.4"
   },
   "packageManager": "yarn@3.1.0"
