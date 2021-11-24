@@ -18,9 +18,10 @@ function getNewFeatures()
                 btn.id = i;
                 btn.addEventListener('click', function () 
                 {
-                    var btn0 = document.getElementById(0);
-                    var btn1 = document.getElementById(1);
-                    var btn2 = document.getElementById(2);
+                    var btn0 = document.getElementById("0");
+                    var btn1 = document.getElementById("1");
+                    var btn2 = document.getElementById("2");
+
                     
                     if(btn.classList.contains('selected'))
                     {
@@ -31,21 +32,21 @@ function getNewFeatures()
                     {
                         btn.classList.remove('unselected');
                         btn.classList.add('selected');
-                        if (btn.id === 0)
+                        if (btn.id == '0')
                         {
                             btn1.classList.add('unselected');
                             btn1.classList.remove('selected');
                             btn2.classList.add('unselected');
                             btn2.classList.remove('selected');
                         }
-                        else if (btn.id === 1)
+                        else if (btn.id == '1')
                         {
                             btn0.classList.add('unselected');
                             btn0.classList.remove('selected');
                             btn2.classList.add('unselected');
                             btn2.classList.remove('selected'); 
                         }
-                        else if (btn.id === 2)
+                        else if (btn.id == '2')
                         {
                             btn0.classList.add('unselected');
                             btn0.classList.remove('selected');
