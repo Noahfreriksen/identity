@@ -15,7 +15,7 @@ server.listen(port, ipaddress, function(){
     console.log("running server");
 })
 
-var io = require('socket.io').listen(server);
+var io = require('socket.io')(server);
 
 
 const ThisPersonDoesNotExist = require("thispersondoesnotexist-js")
