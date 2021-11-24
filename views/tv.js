@@ -1,5 +1,4 @@
 var form = document.getElementById("form");
-getNewImage();
 
 var pusher = new Pusher('eece33e6915f81081df4', {
     cluster: 'eu'
@@ -10,6 +9,16 @@ var channel = pusher.subscribe('my-channel');
 channel.bind('newImage', function(data) {
     getNewImage();
 });
+
+takePicture();
+
+function takePicture()
+{
+    let video = document.querySelector("#video");
+    let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+    video.srcObject = stream;
+}
+
 
 function getNewImage()
 {
