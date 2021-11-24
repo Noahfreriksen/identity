@@ -4,20 +4,8 @@
  */
 var express = require("express");
 var app = express();
-var http = require("http");
 
 const port = process.env.PORT || "7777";
-
-var server = http.createServer(app);
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-
-server.listen(7777, ipaddress, function(){
-    console.log(ipaddress);
-    console.log("running server");
-})
-
-var io = require('socket.io')(server);
-
 
 const ThisPersonDoesNotExist = require("thispersondoesnotexist-js")
 const path = require("path");
@@ -38,11 +26,6 @@ app.set('trust proxy', true);
 /**
  * Routes Definitions
  */
-io.on('connect', (socket) => {
-    console.log('a user connected');
-    console.log(socket.id);
-});
-
 app.get("/", (req, res) => {
     res.status(200).sendFile(__dirname + '/views/vote.html');
 });
@@ -151,6 +134,6 @@ app.post("/confirm", (req, res) => {
 /**
  * Server Activation
  */
-// app.listen(port, () => {
-//     console.log(`Listening to requests on http://localhost:${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Listening to requests on http://localhost:${port}`);
+});

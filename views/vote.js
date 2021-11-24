@@ -1,5 +1,3 @@
-const socket = io();
-
 function getNewFeatures()
 {
     fetch('/getFeatures').then(response => 
