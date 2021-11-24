@@ -12,6 +12,18 @@ const path = require("path");
 const fs = require('fs')
 var bodyParser = require('body-parser');
 
+/**
+ * Pusher configuration
+ */
+const Pusher = require("pusher");
+const pusher = new Pusher({
+    appId: "1302859",
+    key: "eece33e6915f81081df4",
+    secret: "688f6801f9a3f7501e99",
+    cluster: "eu",
+    useTLS: true
+});
+
 global.currentImage = new Map();
 
 /**
@@ -22,6 +34,10 @@ app.set("view engine", "pug");
 app.use(express.static(__dirname + '/avatars'));
 app.use(bodyParser.json());
 app.set('trust proxy', true);
+
+pusher.trigger("my-channel", "my-event", {
+    message: "hello world"
+  });
 
 /**
  * Routes Definitions
