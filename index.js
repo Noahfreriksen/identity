@@ -11,16 +11,11 @@ const ThisPersonDoesNotExist = require("thispersondoesnotexist-js")
 const path = require("path");
 const fs = require('fs')
 var bodyParser = require('body-parser');
-var https = require('https');
-var http = require('http');
 
 var options = {
     key: fs.readFileSync(path.join(__dirname, '/key.pem')),
     cert: fs.readFileSync(path.join(__dirname, '/cert.pem'))
 };
-
-http.createServer(app).listen(8080);
-https.createServer(options, app).listen(port);
 
 /**
  * Pusher configuration
@@ -157,6 +152,6 @@ app.post("/confirm", (req, res) => {
 /**
  * Server Activation
  */
-// app.listen(port, () => {
-//     console.log(`Listening to requests on http://localhost:${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Listening to requests on http://localhost:${port}`);
+});
