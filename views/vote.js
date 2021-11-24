@@ -1,23 +1,3 @@
-var featureList = document.getElementById("featureList");
-var btnFullscreen = featureList.appendChild(newElement('button', 'fullscreen', 'feature-button unselected', 'fbutton'));
-btnFullscreen.addEventListener("click", function() {
-    var docElm = document.documentElement;
-    if (docElm.requestFullscreen) {
-        docElm.requestFullscreen();
-    }
-    else if (docElm.mozRequestFullScreen) {
-        docElm.mozRequestFullScreen();
-    }
-    else if (docElm.webkitRequestFullScreen) {
-        docElm.webkitRequestFullScreen();
-    }
-    else if (docElm.msRequestFullscreen) {
-        docElm.msRequestFullscreen();
-    }
-    btnFullscreen.style.visibility = 'hidden';
-
-}, false);
-
 function getNewFeatures()
 {
     fetch('/getFeatures').then(response => 
@@ -62,11 +42,30 @@ getNewFeatures();
 
 var form = document.getElementById("form");
 var button = form.appendChild(newElement('button', 'None of the above', 'feature-button confirm', 'confirm'));
+var buttonFS = form.appendChild(newElement('button', 'None of the above', 'feature-button confirm', 'confirm'));
 
 button.addEventListener('click', function () 
 {
     confirm();
 })
+
+buttonFS.addEventListener("click", function() {
+    var docElm = document.documentElement;
+    if (docElm.requestFullscreen) {
+        docElm.requestFullscreen();
+    }
+    else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen();
+    }
+    else if (docElm.webkitRequestFullScreen) {
+        docElm.webkitRequestFullScreen();
+    }
+    else if (docElm.msRequestFullscreen) {
+        docElm.msRequestFullscreen();
+    }
+    btnFullscreen.style.visibility = 'hidden';
+
+}, false);
 
 // Helper functions
 function shuffle(array) 
