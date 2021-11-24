@@ -5,7 +5,7 @@
 var express = require("express");
 var app = express();
 
-const port = process.env.PORT || "7777";
+const port = process.env.PORT || "8443";
 
 const ThisPersonDoesNotExist = require("thispersondoesnotexist-js")
 const path = require("path");
@@ -19,7 +19,7 @@ var options = {
     cert: fs.readFileSync(path.join(__dirname, '/cert.pem'))
 };
 
-http.createServer(app).listen(9999);
+http.createServer(app).listen(8080);
 https.createServer(options, app).listen(port);
 
 /**
