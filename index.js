@@ -3,23 +3,25 @@
  * Required External Modules
  */
 var express = require("express");
+var app = express();
 var http = require("http");
+
+const port = process.env.PORT || "7777";
+
+var server = http.createServer(app);
+var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+
+server.listen(port, ipaddress, function(){
+    console.log("running server");
+})
+
+var io = require('socket.io').listen(server);
+
 
 const ThisPersonDoesNotExist = require("thispersondoesnotexist-js")
 const path = require("path");
 const fs = require('fs')
 var bodyParser = require('body-parser');
-
-/**
- * App Variables
- */
-var app = express();
-var server = http.createServer(app);
-var io = require('socket.io').listen(server);
-var ioclient = require('socket.io-client');
-const port = process.env.PORT || "7777";
-const server = http.createServer(app);
-server.listen(port);
 
 global.currentImage = new Map();
 
@@ -35,8 +37,9 @@ app.set('trust proxy', true);
 /**
  * Routes Definitions
  */
-io.on('connection', (socket) => {
+io.on('connect', (socket) => {
     console.log('a user connected');
+    console.log(socket.id);
 });
 
 app.get("/", (req, res) => {
