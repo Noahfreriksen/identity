@@ -18,16 +18,16 @@ function takePicture()
 
     if (navigator.mediaDevices.getUserMedia) 
     {
-    navigator.mediaDevices.getUserMedia({ video: true })
-    .then(function (stream) 
-    {
-        video.srcObject = stream;
-    })
-    .catch(function (err0r) 
-    {
-        console.log("Something went wrong!");
-    });
-
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) 
+            {
+                video.srcObject = stream;
+            })
+            .catch(function (err0r) 
+            {
+                console.log("Something went wrong!");
+            });
+    }
 }
 
 
@@ -52,4 +52,4 @@ function newElement(tagName, TextContent, ClassName, name) {
     nTag.name = name;
     nTag.appendChild(document.createTextNode(TextContent));
     return nTag;
-  }
+}
