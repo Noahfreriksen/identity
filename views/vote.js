@@ -15,9 +15,13 @@ function getNewFeatures()
             {
                 const feature = newArray[i];
                 var btn = featureList.appendChild(newElement('button', feature, 'feature-button unselected', 'fbutton'));
-
+                btn.id = i;
                 btn.addEventListener('click', function () 
                 {
+                    var btn0 = document.getElementById(0);
+                    var btn1 = document.getElementById(1);
+                    var btn2 = document.getElementById(2);
+                    
                     if(btn.classList.contains('selected'))
                     {
                         btn.classList.add('unselected');
@@ -27,8 +31,28 @@ function getNewFeatures()
                     {
                         btn.classList.remove('unselected');
                         btn.classList.add('selected');
-                    }
-                    confirm();
+                        if (btn.id === 0)
+                        {
+                            btn1.classList.add('unselected');
+                            btn1.classList.remove('selected');
+                            btn2.classList.add('unselected');
+                            btn2.classList.remove('selected');
+                        }
+                        else if (btn.id === 1)
+                        {
+                            btn0.classList.add('unselected');
+                            btn0.classList.remove('selected');
+                            btn2.classList.add('unselected');
+                            btn2.classList.remove('selected'); 
+                        }
+                        else if (btn.id === 2)
+                        {
+                            btn0.classList.add('unselected');
+                            btn0.classList.remove('selected');
+                            btn1.classList.add('unselected');
+                            btn1.classList.remove('selected');   
+                        }
+                    } 
                 });
             }());
         }
@@ -41,7 +65,7 @@ function getNewFeatures()
 getNewFeatures();
 
 var form = document.getElementById("form");
-var button = form.appendChild(newElement('button', 'None of the above', 'feature-button confirm', 'confirm'));
+var button = form.appendChild(newElement('button', 'Next', 'feature-button confirm', 'confirm'));
 var buttonFS = form.appendChild(newElement('button', 'Fullscreen', 'feature-button confirm', 'confirm'));
 
 button.addEventListener('click', function () 
