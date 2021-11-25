@@ -20,20 +20,57 @@ var form = document.getElementById("form");
 var button = form.appendChild(newElement('button', 'Next', 'feature-button confirm', 'confirm'));
 var buttonFS = form.appendChild(newElement('button', 'Fullscreen', 'feature-button confirm', 'confirm'));
 
+let voteCount = 0;
+let preCount = 0;
+
 button.addEventListener('click', function () 
 {
+    console.log("click");
     switch (step)
     {
         case "begin":
+            voteCount = 0;
+            preCount = 0;
             step = "takePicture";
             sendStep();
             break;
+
+        case "takePicture":
+            privatechannel.trigger('client-shutter', {});
+
+            voteCount = 0;
+            preCount = 0;
+            step = "vote";
+            //sendStep();
+            break;
+
+        case "vote":
+            console.log("vote");
+            console.log(voteCount);
+
+            if (voteCount == 0)
+            {
+                sendStep();
+                getNewFeatures();
+                voteCount++;
+            }
+            else if (voteCount == 10)
+            {
+                step = "results";
+                sendStep();
+            }
+            else
+            {
+                confirm();
+                voteCount++;
+            }
+            break;
     }
-    privatechannel.trigger('client-shutter', {});
 })
 
 function getNewFeatures()
 {
+    console.log("getnewfeatues");
     fetch('/getFeatures').then(response => 
     {
         return response.json();
@@ -48,6 +85,7 @@ function getNewFeatures()
             (function ()
             {
                 const feature = newArray[i];
+                console.log(feature);
                 var btn = featureList.appendChild(newElement('button', feature, 'feature-button unselected', 'fbutton'));
                 btn.id = i;
                 btn.addEventListener('click', function () 

@@ -36,12 +36,31 @@ privatechannel.bind("client-step", function(data) {
         case "vote":
             vote();
             break;
+        case "results":
+            results();
+            break;
 
         default:
           // code block
       }
 
 });
+
+function results()
+{
+    text1.innerHTML = "The system will run your picture through the machine learning algorithm now."
+    text2.innerHTML = "The prejudices of a group of people will be shown on the screen once it's ready."
+
+    text3.innerHTML = ""
+
+    var video = document.querySelector("#video");
+    var portrait = document.querySelector("#portrait");
+
+    video.style.display = 'none';
+    portrait.style.display = 'none';
+
+    //getNewImage();
+}
 
 function vote()
 {
@@ -56,8 +75,7 @@ function vote()
     video.style.display = 'none';
     portrait.style.display = 'block';
 
-
-
+    getNewImage();
 }
 
 function titleScreen()
@@ -74,11 +92,6 @@ function titleScreen()
     portrait.style.display = 'none';
 
 }
-
-// How does this person come across to you?
-// Select the trait that fits this person best
-// Make a selection on the tablet below
-
 
 function takePicture()
 {
@@ -110,32 +123,11 @@ function takePicture()
 // Afbeelding hier maken
 privatechannel.bind('client-shutter', function(data) {
     
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.heigth);
+    var form = document.getElementById("myAwesomeForm");
+    let image_data_url = canvas.toDataURL('image/jpeg');
+    
 });
-
-
-function b64toBlob(b64Data, contentType, sliceSize) {
-    contentType = contentType || '';
-    sliceSize = sliceSize || 512;
-
-    var byteCharacters = atob(b64Data); // window.atob(b64Data)
-    var byteArrays = [];
-
-    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-        var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-        var byteNumbers = new Array(slice.length);
-        for (var i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-        }
-
-        var byteArray = new Uint8Array(byteNumbers);
-
-        byteArrays.push(byteArray);
-    }
-
-    var blob = new Blob(byteArrays, {type: contentType});
-    return blob;
-}
 
 function getNewImage()
 {
