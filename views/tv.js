@@ -1,4 +1,11 @@
 var form = document.getElementById("form");
+var text1 = document.querySelector("#text1");
+var text2 = document.querySelector("#text2");
+var text3 = document.querySelector("#text3");
+
+var canvas = document.querySelector("#canvas");
+canvas.style.display = 'none';
+
 
 var pusher = new Pusher('eece33e6915f81081df4', {
     cluster: 'eu'
@@ -7,18 +14,50 @@ var pusher = new Pusher('eece33e6915f81081df4', {
 var channel = pusher.subscribe('my-channel');
 var privatechannel = pusher.subscribe('private-channel');
 
+privatechannel.bind("pusher:subscription_succeeded", () => {
+    privatechannel.trigger('client-requestStep', {});
+});
+
 channel.bind('newImage', function(data) {
     getNewImage();
 });
 
-var text1 = document.querySelector("#text1");
-var text2 = document.querySelector("#text2");
-var text3 = document.querySelector("#text3");
+privatechannel.bind("client-step", function(data) {
+    console.log(data);
+    switch(data) {
+        case "begin":
+          titleScreen();
+          break;
 
-var canvas = document.querySelector("#canvas");
-canvas.style.display = 'none';
+        case y:
+          // code block
+          break;
 
-takePicture();
+        default:
+          // code block
+      }
+
+});
+
+function titleScreen()
+{
+    text1.innerHTML = "What goes around comes around"
+    text2.innerHTML = ""
+
+    text3.innerHTML = "Hit the button on the tablet"
+
+    var video = document.querySelector("#video");
+    var portrait = document.querySelector("#portrait");
+
+    video.style.display = 'none';
+    portrait.style.display = 'none';
+
+}
+
+// How does this person come across to you?
+// Select the trait that fits this person best
+// Make a selection on the tablet below
+
 
 function takePicture()
 {
@@ -45,11 +84,6 @@ function takePicture()
             });
     }
 }
-
-privatechannel.bind('client-step', function(data) {
-    console.log(data);
-
-});
 
 privatechannel.bind('client-shutter', function(data) {
     console.log("shutter");

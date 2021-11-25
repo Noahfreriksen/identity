@@ -8,7 +8,12 @@ var channel = pusher.subscribe('my-channel');
 var privatechannel = pusher.subscribe('private-channel');
 
 privatechannel.bind("pusher:subscription_succeeded", () => {
-    privatechannel.trigger('client-step', "begin");
+    privatechannel.trigger('client-step', step);
+});
+
+privatechannel.bind("client-requestStep", () => {
+    console.log("request step");
+    privatechannel.trigger('client-step', step);
 });
 
 function getNewFeatures()
