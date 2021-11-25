@@ -4,6 +4,9 @@
  */
 var express = require("express");
 var app = express();
+const multer = require("multer");
+
+const upload = multer({dest: './'})
 
 const port = process.env.PORT || "7777";
 
@@ -11,16 +14,13 @@ const ThisPersonDoesNotExist = require("thispersondoesnotexist-js")
 const path = require("path");
 const fs = require('fs')
 var bodyParser = require('body-parser');
-
-var options = {
-    key: fs.readFileSync(path.join(__dirname, '/key.pem')),
-    cert: fs.readFileSync(path.join(__dirname, '/cert.pem'))
-};
+const cors = require("cors");
 
 /**
  * Pusher configuration
  */
 const Pusher = require("pusher");
+const { SSL_OP_NO_TLSv1_1 } = require("constants");
 const pusher = new Pusher({
     appId: "1302859",
     key: "eece33e6915f81081df4",
@@ -38,11 +38,20 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use(express.static(__dirname + '/avatars'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 app.set('trust proxy', true);
 
 /**
  * Routes Definitions
  */
+app.post("/pusher/auth", (req, res) => {
+    const socketId = req.body.socket_id;
+    const channel = req.body.channel_name;
+    const auth = pusher.authenticate(socketId, channel);
+    res.send(auth);
+});
+
 app.get("/", (req, res) => {
     res.status(200).sendFile(__dirname + '/views/vote.html');
 });
@@ -73,6 +82,22 @@ app.get("/neural.png", (req, res) => {
 
 app.get("/getFeatures", (req, res) => {
     res.status(200).sendFile(__dirname + '/features.json');
+});
+
+app.get("/Bingana-6YGyx.otf", (req, res) => {
+    res.status(200).sendFile(__dirname + '/Bingana-6YGyx.otf');
+});
+
+app.get("/Bingana-ywxL3.ttf", (req, res) => {
+    res.status(200).sendFile(__dirname + '/Bingana-ywxL3.ttf');
+});
+
+app.post("/postImage", (req, res) => {
+    console.log(req.body);
+    // fs.writeFile('newImage', req.files.image, function (err) {
+    //     if (err) throw err;
+    //     console.log("It's saved");
+    //   });
 });
 
 app.get("/getImage", (req, res) => {

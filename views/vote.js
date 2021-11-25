@@ -1,3 +1,16 @@
+let step = "begin";
+
+var pusher = new Pusher('eece33e6915f81081df4', {
+    cluster: 'eu'
+});
+
+var channel = pusher.subscribe('my-channel');
+var privatechannel = pusher.subscribe('private-channel');
+
+privatechannel.bind("pusher:subscription_succeeded", () => {
+    privatechannel.trigger('client-step', "begin");
+});
+
 function getNewFeatures()
 {
     fetch('/getFeatures').then(response => 
@@ -63,15 +76,13 @@ function getNewFeatures()
     });
 }
 
-getNewFeatures();
-
 var form = document.getElementById("form");
 var button = form.appendChild(newElement('button', 'Next', 'feature-button confirm', 'confirm'));
 var buttonFS = form.appendChild(newElement('button', 'Fullscreen', 'feature-button confirm', 'confirm'));
 
 button.addEventListener('click', function () 
 {
-    confirm();
+    privatechannel.trigger('client-shutter', {});
 })
 
 buttonFS.addEventListener("click", function() {

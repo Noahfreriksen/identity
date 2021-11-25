@@ -11,8 +11,11 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "pug": "^3.0.2",
+    "multer": "^1.4.3",
+    "pusher": "^5.0.0",
+    "pusher-js": "^7.0.3",
     "sharp": "^0.21.3",
     "thispersondoesnotexist-js": "^1.0.4"
   },

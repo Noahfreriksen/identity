@@ -5,16 +5,32 @@ var pusher = new Pusher('eece33e6915f81081df4', {
 });
 
 var channel = pusher.subscribe('my-channel');
+var privatechannel = pusher.subscribe('private-channel');
 
 channel.bind('newImage', function(data) {
     getNewImage();
 });
 
+var text1 = document.querySelector("#text1");
+var text2 = document.querySelector("#text2");
+var text3 = document.querySelector("#text3");
+
+var canvas = document.querySelector("#canvas");
+canvas.style.display = 'none';
+
 takePicture();
 
 function takePicture()
 {
+    text1.innerHTML = "Take a picture of yourself. The top and bottom of your head must be completely visible"
+    text2.innerHTML = "The picture will be deleted after the session"
+
+    text3.innerHTML = "Hit the button on the tablet"
+
     var video = document.querySelector("#video");
+    var portrait = document.querySelector("#portrait");
+
+    portrait.style.display = 'none';
 
     if (navigator.mediaDevices.getUserMedia) 
     {
@@ -30,6 +46,60 @@ function takePicture()
     }
 }
 
+privatechannel.bind('client-step', function(data) {
+    console.log(data);
+
+});
+
+privatechannel.bind('client-shutter', function(data) {
+    console.log("shutter");
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.heigth);
+    var form = document.getElementById("myAwesomeForm");
+    let image_data_url = canvas.toDataURL('image/jpeg');
+
+    // Split the base64 string in data and contentType
+    var block = image_data_url.split(";");
+    // Get the content type of the image
+    var contentType = block[0].split(":")[1];// In this case "image/jpeg"
+    // get the real base64 content of the file
+    var realData = block[1].split(",")[1];
+
+    // Convert it to a blob to upload
+    var blob = b64toBlob(realData, contentType);
+
+    // Create a FormData and append the file with "image" as parameter name
+    var formDataToUpload = new FormData(form);
+    formDataToUpload.append("image", blob);
+
+    var request = new XMLHttpRequest();
+    request.open("POST", "/postImage");
+    request.send(formDataToUpload);
+});
+
+
+function b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data); // window.atob(b64Data)
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+}
 
 function getNewImage()
 {

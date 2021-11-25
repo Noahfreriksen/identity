@@ -12,6 +12,13 @@ body
     vertical-align: middle;
 }
 
+.video
+{
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+  -moz-transform:rotateY(180deg); /* Firefox */
+}
+
 .feature-button
 {
     width: 30vw;
@@ -61,6 +68,8 @@ body
     margin-top: 40vh;
 }
 
+
+
 @media screen and (max-width: 90vh) 
 {
     .image
@@ -74,28 +83,50 @@ body
     
 }
 
+.formm{
+    display: none;
+}
+
+@font-face {
+    font-family: "Bingana";
+    src: url("/Bingana-6YGyx.otf") format("opentype"),
+         url("/Bingana-ywxL3.ttf")  format("truetype")
+}
+
 .title {
-    font-family: "Montserrat";
+    font-family: "Bingana", sans-serif;
     text-align: center;
     color: #FFF;
     display: block;
     align-items: center;
     justify-content: center;
     letter-spacing: 1px;
-    margin-top: 2px;
+    margin-top: 10%;
     margin-bottom: 2px;
   }
   
   h1 {
       
-    background-image: url(https://media1.giphy.com/media/n3xSURtNE62t2/giphy.gif?cid=ecf05e47vvz2mfckm5uhem0srqwmdip1j3ngtvb8vjyp0g87&rid=giphy.gif&ct=g);
     background-size: cover;
     background-position: center;
-    color: transparent;
+    color: grey;
     -moz-background-clip: text;
     -webkit-background-clip: text;
     text-transform: uppercase;
     font-size: 7vw;
+    line-height: 1;
+    margin: 10px 1 0 0;
+  }
+
+  h5 {
+      
+    background-size: cover;
+    background-position: center;
+    color: grey;
+    -moz-background-clip: text;
+    -webkit-background-clip: text;
+    text-transform: uppercase;
+    font-size: 5vw;
     line-height: .75;
     margin: 10px 0;
   }
