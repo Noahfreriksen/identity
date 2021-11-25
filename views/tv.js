@@ -7,6 +7,7 @@ var canvas = document.querySelector("#canvas");
 canvas.style.display = 'none';
 
 
+
 var pusher = new Pusher('eece33e6915f81081df4', {
     cluster: 'eu'
 });
@@ -18,16 +19,16 @@ privatechannel.bind("pusher:subscription_succeeded", () => {
     privatechannel.trigger('client-requestStep', {});
 });
 
-channel.bind('newImage', function(data) {
+channel.bind('newImage', function (data) {
     getNewImage();
 });
 
-privatechannel.bind("client-step", function(data) {
+privatechannel.bind("client-step", function (data) {
     console.log(data);
-    switch(data) {
+    switch (data) {
         case "begin":
-          titleScreen();
-          break;
+            titleScreen();
+            break;
 
         case "takePicture":
             takePicture();
@@ -41,13 +42,12 @@ privatechannel.bind("client-step", function(data) {
             break;
 
         default:
-          // code block
-      }
+        // code block
+    }
 
 });
 
-function results()
-{
+function results() {
     text1.innerHTML = "The system will run your picture through the machine learning algorithm now."
     text2.innerHTML = "The prejudices of a group of people will be shown on the screen once it's ready."
 
@@ -62,8 +62,7 @@ function results()
     //getNewImage();
 }
 
-function vote()
-{
+function vote() {
     text1.innerHTML = "How does this person come across to you?"
     text2.innerHTML = "Select the trait that fits this person best"
 
@@ -78,8 +77,7 @@ function vote()
     getNewImage();
 }
 
-function titleScreen()
-{
+function titleScreen() {
     text1.innerHTML = "What goes around comes around"
     text2.innerHTML = ""
 
@@ -93,8 +91,7 @@ function titleScreen()
 
 }
 
-function takePicture()
-{
+function takePicture() {
     text1.innerHTML = "Take a picture of yourself. The top and bottom of your head must be completely visible"
     text2.innerHTML = "The picture will be deleted after the session"
 
@@ -106,40 +103,28 @@ function takePicture()
     portrait.style.display = 'none';
     video.style.display = 'block';
 
-    if (navigator.mediaDevices.getUserMedia) 
-    {
+    if (navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function (stream) 
-            {
+            .then(function (stream) {
                 video.srcObject = stream;
             })
-            .catch(function (err0r) 
-            {
+            .catch(function (err0r) {
                 console.log("Something went wrong!");
             });
     }
 }
 
-// Afbeelding hier maken
-privatechannel.bind('client-shutter', function(data) {
-    
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.heigth);
-    var form = document.getElementById("myAwesomeForm");
-    let image_data_url = canvas.toDataURL('image/jpeg');
-    
+privatechannel.bind('client-shutter', function (data) {
+    takeScreenshot();
 });
 
-function getNewImage()
-{
-    fetch('/getImage').then(response => 
-    {
+function getNewImage() {
+    fetch('/getImage').then(response => {
         return response.json();
-    }).then(data => 
-    {
+    }).then(data => {
         var img = document.getElementById("portrait");
         img.src = data;
-    }).catch(err => 
-    {
+    }).catch(err => {
         console.log(err)
     });
 }
@@ -150,4 +135,36 @@ function newElement(tagName, TextContent, ClassName, name) {
     nTag.name = name;
     nTag.appendChild(document.createTextNode(TextContent));
     return nTag;
+}
+
+/** 
+ * Some magic found on Stackoverflow.
+ */
+function snap() {
+    context.fillRect(0, 0, w, h);
+    context.drawImage(video, 0, 0, w, h);
+}
+
+/**
+ * Grabs screenshot, converts it to base69 and sends it to the node server.
+ */
+function screenie() {
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.heigth);
+    let base64Image = canvas.toDataURL('image/jpeg');
+    var xhr = new XMLHttpRequest();
+    var url = "/processImage";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    var data = JSON.stringify({ "data": base64Image });
+    xhr.send(data)
+}
+
+/**
+ * The timeout function is to make sure that everything is loaded properly. 
+ */
+function takeScreenshot() {
+    setTimeout(function () {
+        snap();
+        screenie();
+    }, 3000);
 }

@@ -30,6 +30,7 @@ const pusher = new Pusher({
 });
 
 global.currentImage = new Map();
+app.use(express.json());
 
 /**
  *  App Configuration
@@ -92,8 +93,18 @@ app.get("/Bingana-ywxL3.ttf", (req, res) => {
     res.status(200).sendFile(__dirname + '/Bingana-ywxL3.ttf');
 });
 
-app.post("/postImage", (req, res) => {
-
+app.post("/processImage", (req, res) => {
+    let image = req.body.data;
+    var base64Data = image.replace(/^data:image\/jpeg;base64,/, "");
+    require("fs").writeFile("./image/image.jpeg", base64Data, 'base64', function(err) {
+        if(err) {
+            console.log(err);
+            res.sendStatus(505);
+        } else {
+            console.log("We processed an image.")
+            res.sendStatus(200)
+        }
+    });
 });
 
 app.get("/getImage", (req, res) => {
