@@ -29,6 +29,7 @@ button.addEventListener('click', function ()
     switch (step)
     {
         case "begin":
+            button.innerHTML = "Next";
             voteCount = 0;
             preCount = 0;
             step = "takePicture";
@@ -37,11 +38,16 @@ button.addEventListener('click', function ()
 
         case "takePicture":
             privatechannel.trigger('client-shutter', {});
+            button.style.display = 'none';
 
             voteCount = 0;
             preCount = 0;
             step = "vote";
-            //sendStep();
+            setTimeout(function () {
+                button.style.display = 'block';
+                sendStep();
+                getNewFeatures();
+            }, 3500);
             break;
 
         case "vote":
@@ -51,12 +57,32 @@ button.addEventListener('click', function ()
             if (voteCount == 0)
             {
                 sendStep();
-                getNewFeatures();
+                confirm();
                 voteCount++;
             }
-            else if (voteCount == 10)
+            else if (voteCount >= 9)
             {
-                step = "results";
+                if (preCount > 0)
+                {
+                    step = "results";
+                }
+                else
+                {
+                    step = "noresults"
+                }
+                setTimeout(function () 
+                {
+                    var btns = document.getElementsByClassName("deletable");
+                    console.log(btns);
+                    for(var i = 0; i < btns.length; i++)
+                    {
+                        console.log(btns[i]);
+                        btns[i].style.display = 'none';
+                    }
+                }, 100);
+
+                button.innerHTML = "Stop";
+                confirm();
                 sendStep();
             }
             else
@@ -65,6 +91,14 @@ button.addEventListener('click', function ()
                 voteCount++;
             }
             break;
+
+        case "noresults":
+            button.innerHTML = "Next";
+            step="begin";
+            sendStep();
+            break;
+
+
     }
 })
 
@@ -86,7 +120,7 @@ function getNewFeatures()
             {
                 const feature = newArray[i];
                 console.log(feature);
-                var btn = featureList.appendChild(newElement('button', feature, 'feature-button unselected', 'fbutton'));
+                var btn = featureList.appendChild(newElement('button', feature, 'feature-button unselected deletable', 'fbutton'));
                 btn.id = i;
                 btn.addEventListener('click', function () 
                 {
@@ -184,6 +218,7 @@ function newElement(tagName, TextContent, ClassName, name) {
 function confirm()
 {
     const btnsSelected = document.getElementsByClassName("selected");
+    preCount += btnsSelected.length;
     let featureArray = [];
 
     for (var i = 0; i < btnsSelected.length; i++)

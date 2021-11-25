@@ -29,7 +29,7 @@ const pusher = new Pusher({
     useTLS: true
 });
 
-global.currentImage = new Map();
+global.currentImage = "";
 app.use(express.json());
 
 /**
@@ -97,10 +97,10 @@ app.get("/Bingana-ywxL3.ttf", (req, res) => {
 app.post("/processImage", (req, res) => {
     let image = req.body.data;
     var base64Data = image.replace(/^data:image\/jpeg;base64,/, "");
-    require("fs").writeFile("./image/image.jpeg", base64Data, 'base64', function(err) {
+    require("fs").writeFile(__dirname + "/image/image.jpeg", base64Data, 'base64', function(err) {
         if(err) {
             console.log(err);
-            res.sendStatus(505);
+            res.sendStatus(500);
         } else {
             console.log("We processed an image.")
             res.sendStatus(200)
@@ -110,9 +110,8 @@ app.post("/processImage", (req, res) => {
 
 app.get("/getImage", (req, res) => {
     // Check if client has an image in avatars that need to be removed
-    if (currentImage.has(req.ip)) {
-        console.log("Delete image");
-        fs.unlink('avatars/' + currentImage.get(req.ip), (err) => {
+    if (currentImage != "") {
+        fs.unlink('avatars/' + currentImage, (err) => {
             if (err) {
                 console.error(err)
                 return
@@ -129,9 +128,8 @@ app.get("/getImage", (req, res) => {
         type: 'file',  // Type of file to generate (file or base64) (default file)
         path: 'avatars' // Path to save (Applies to type file) (default .)
     }).then(ress => {
-        console.log(req.ip);
-        currentImage.set(req.ip, ress.data.name)
-        res.status(200).send(JSON.stringify(currentImage.get(req.ip)));
+        currentImage = ress.data.name
+        res.status(200).send(JSON.stringify(currentImage));
         /*
         { 
             status: true,
@@ -162,11 +160,13 @@ app.post("/confirm", (req, res) => {
         if (!fs.existsSync(dDir)) {
             fs.mkdirSync(dDir);
         }
-
+        console.log(req.ip);
+        console.log(currentImage);
         fs.copyFileSync
             (
-                sDir + currentImage.get(req.ip),
-                dDir + currentImage.get(req.ip),
+                
+                sDir + currentImage,
+                dDir + currentImage,
                 (err) => {
                     if (err) {
                         console.log(err);

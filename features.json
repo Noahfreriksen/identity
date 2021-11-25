@@ -2,13 +2,19 @@
     "features" : [
         "Polite",
         "Warm",
-        "Disciplined",
         "Ambitious",
         "Wise",
-        "Listener",
         "Confident",
-        "Friendly",
         "Open-minded",
-        "Creative"
+        "Creative",
+        "Friendly",
+        "Disciplined",
+        "Shy",
+        "Unhappy",
+        "Energetic",
+        "Selfish",
+        "Stubborn",
+        "Thoughtful",
+        "Extravert"
     ]
 }
