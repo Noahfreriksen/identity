@@ -42,6 +42,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.set('trust proxy', true);
+app.use(express.bodyParser({limit: '50mb'}));
 
 /**
  * Routes Definitions
