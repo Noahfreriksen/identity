@@ -29,15 +29,36 @@ privatechannel.bind("client-step", function(data) {
           titleScreen();
           break;
 
-        case y:
-          // code block
-          break;
+        case "takePicture":
+            takePicture();
+            break;
+
+        case "vote":
+            vote();
+            break;
 
         default:
           // code block
       }
 
 });
+
+function vote()
+{
+    text1.innerHTML = "How does this person come across to you?"
+    text2.innerHTML = "Select the trait that fits this person best"
+
+    text3.innerHTML = "Fill in your prejudices on the tablet below"
+
+    var video = document.querySelector("#video");
+    var portrait = document.querySelector("#portrait");
+
+    video.style.display = 'none';
+    portrait.style.display = 'block';
+
+
+
+}
 
 function titleScreen()
 {
@@ -70,6 +91,7 @@ function takePicture()
     var portrait = document.querySelector("#portrait");
 
     portrait.style.display = 'none';
+    video.style.display = 'block';
 
     if (navigator.mediaDevices.getUserMedia) 
     {
@@ -85,29 +107,9 @@ function takePicture()
     }
 }
 
+// Afbeelding hier maken
 privatechannel.bind('client-shutter', function(data) {
-    console.log("shutter");
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.heigth);
-    var form = document.getElementById("myAwesomeForm");
-    let image_data_url = canvas.toDataURL('image/jpeg');
-
-    // Split the base64 string in data and contentType
-    var block = image_data_url.split(";");
-    // Get the content type of the image
-    var contentType = block[0].split(":")[1];// In this case "image/jpeg"
-    // get the real base64 content of the file
-    var realData = block[1].split(",")[1];
-
-    // Convert it to a blob to upload
-    var blob = b64toBlob(realData, contentType);
-
-    // Create a FormData and append the file with "image" as parameter name
-    var formDataToUpload = new FormData(form);
-    formDataToUpload.append("image", blob);
-
-    var request = new XMLHttpRequest();
-    request.open("POST", "/postImage");
-    request.send(formDataToUpload);
+    
 });
 
 

@@ -93,11 +93,7 @@ app.get("/Bingana-ywxL3.ttf", (req, res) => {
 });
 
 app.post("/postImage", (req, res) => {
-    console.log(req.body);
-    // fs.writeFile('newImage', req.files.image, function (err) {
-    //     if (err) throw err;
-    //     console.log("It's saved");
-    //   });
+
 });
 
 app.get("/getImage", (req, res) => {

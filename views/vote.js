@@ -13,8 +13,24 @@ privatechannel.bind("pusher:subscription_succeeded", () => {
 
 privatechannel.bind("client-requestStep", () => {
     console.log("request step");
-    privatechannel.trigger('client-step', step);
+    sendStep();
 });
+
+var form = document.getElementById("form");
+var button = form.appendChild(newElement('button', 'Next', 'feature-button confirm', 'confirm'));
+var buttonFS = form.appendChild(newElement('button', 'Fullscreen', 'feature-button confirm', 'confirm'));
+
+button.addEventListener('click', function () 
+{
+    switch (step)
+    {
+        case "begin":
+            step = "takePicture";
+            sendStep();
+            break;
+    }
+    privatechannel.trigger('client-shutter', {});
+})
 
 function getNewFeatures()
 {
@@ -80,15 +96,6 @@ function getNewFeatures()
         console.log(err)
     });
 }
-
-var form = document.getElementById("form");
-var button = form.appendChild(newElement('button', 'Next', 'feature-button confirm', 'confirm'));
-var buttonFS = form.appendChild(newElement('button', 'Fullscreen', 'feature-button confirm', 'confirm'));
-
-button.addEventListener('click', function () 
-{
-    privatechannel.trigger('client-shutter', {});
-})
 
 buttonFS.addEventListener("click", function() {
     var docElm = document.documentElement;
@@ -166,4 +173,9 @@ function confirm()
             getNewFeatures();
         }
     });
+}
+
+function sendStep()
+{
+    privatechannel.trigger('client-step', step);
 }
