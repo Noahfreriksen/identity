@@ -41,7 +41,10 @@ button.addEventListener('click', function ()
             voteCount = 0;
             preCount = 0;
             step = "vote";
-            //sendStep();
+            setTimeout(function () {
+                sendStep();
+                getNewFeatures();
+            }, 3500);
             break;
 
         case "vote":
@@ -54,7 +57,7 @@ button.addEventListener('click', function ()
                 getNewFeatures();
                 voteCount++;
             }
-            else if (voteCount == 10)
+            else if (voteCount >= 9)
             {
                 step = "results";
                 sendStep();

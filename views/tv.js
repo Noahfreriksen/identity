@@ -150,11 +150,12 @@ function snap() {
  */
 function screenie() {
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.heigth);
-    let base64Image = canvas.toDataURL('image/jpeg');
+    let base64Image = canvas.toDataURL('image/jpeg',0.7);
     var xhr = new XMLHttpRequest();
     var url = "/processImage";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Transfer-Encoding", "chunked")
     var data = JSON.stringify({ "data": base64Image });
     xhr.send(data)
 }
