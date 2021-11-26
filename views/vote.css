@@ -9,6 +9,13 @@ body
     width: 100vw;
 }
 
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .form
 {
     vertical-align: middle;

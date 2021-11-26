@@ -89,9 +89,9 @@ pusher_client = pusher.Pusher(app_id=u'1302859', key=u'eece33e6915f81081df4', se
 
 labels = [max_label, second_max_label, second_min_label, min_label]
 
-percentages = [max_percentage, second_max_percentage, second_min_percentage, min_percentage]
+percentages = [str(max_percentage), str(second_max_percentage), str(second_min_percentage), str(min_percentage)]
 
 pusher_client.trigger(u'private-channel', u'client-labels', {'labels': labels})
-pusher_client.trigger(u'private-channel', u'client-percentages', {'labels': str(percentages)})
+pusher_client.trigger(u'private-channel', u'client-percentages', {'percentages': percentages})
 
 sys.stdout.flush()

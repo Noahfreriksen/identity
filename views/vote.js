@@ -79,7 +79,7 @@ button.addEventListener('click', function ()
                         console.log(btns[i]);
                         btns[i].style.display = 'none';
                     }
-                }, 100);
+                }, 300);
 
                 button.innerHTML = "Stop";
                 confirm();
@@ -97,6 +97,12 @@ button.addEventListener('click', function ()
             step="begin";
             sendStep();
             break;
+        case "results":
+            button.innerHTML = "Next";
+            step="begin";
+            sendStep();
+            break;
+
 
 
     }

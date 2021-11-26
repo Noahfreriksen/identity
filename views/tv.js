@@ -6,8 +6,6 @@ let text3 = document.querySelector("#text3");
 var canvas = document.querySelector("#canvas");
 canvas.style.display = 'none';
 
-
-
 var pusher = new Pusher('eece33e6915f81081df4', {
     cluster: 'eu'
 });
@@ -18,13 +16,49 @@ var privatechannel = pusher.subscribe('private-channel');
 privatechannel.bind("pusher:subscription_succeeded", () => {
     privatechannel.trigger('client-requestStep', {});
 });
+var labels;
+var percentages;
 
 privatechannel.bind("client-labels", (data) => {
-    console.log(data);
+    labels = data.labels;
+    console.log(labels);
 });
 
 privatechannel.bind("client-percentages", (data) => {
-    console.log(data);
+    text1.innerHTML = "This is your prejudiced identity"
+    
+    percentages = data.percentages;
+    console.log(percentages);
+
+    let newPercentages = [0, 0, 0, 0];
+
+    for (var i = 0; i < percentages.length; i++)
+    {
+
+        newPercentages[i] = parseInt(percentages[i] * 100);
+    }
+
+    console.log(newPercentages);
+
+    var xValues = labels;
+    var yValues = newPercentages;
+    var barColors = ["#28c48d", "#28c48d","#28c48d","#28c48d"];
+
+    new Chart("myChart", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+             }
+        }
+    });
 });
 
 channel.bind('newImage', function (data) {
@@ -72,10 +106,20 @@ function noresults() {
 }
 
 function results() {
-    text1.innerHTML = "The system will run your picture through the machine learning algorithm now."
-    text2.innerHTML = "The prejudices of a group of people will be shown on the screen once it's ready."
+    var chart = form.appendChild(newElement('canvas', '', '', ''));
+    chart.id = "myChart";
+    chart.style.width = '80vw';
 
-    text3.innerHTML = ""
+    fetch('/predict').then(response => {
+        return response;
+    }).catch(err => {
+        console.log(err)
+    });
+
+    text1.innerHTML = "The system will run your picture through the machine learning algorithm now."
+    text2.innerHTML = "The biases about you are shown on the screen when they are calculated."
+
+    text3.innerHTML = "What goes around comes around"
 
     var video = document.querySelector("#video");
     var portrait = document.querySelector("#portrait");
@@ -100,6 +144,14 @@ function vote() {
 }
 
 function titleScreen() {
+    try{
+        document.getElementById('myChart').remove();
+    }
+    catch (e)
+    {
+
+    }
+    
     text1.innerHTML = "What goes around comes around"
     text2.innerHTML = ""
 
@@ -110,6 +162,9 @@ function titleScreen() {
 
     video.style.display = 'none';
     portrait.style.display = 'none';
+
+    labels = []
+    percentages = []
 
     // text1.style.display='block';
     // text2.style.display='block';
@@ -190,15 +245,15 @@ function screenie() {
  * The timeout function is to make sure that everything is loaded properly. 
  */
 function takeScreenshot() {
-    text1.innerHTML = "3";
+    text3.innerHTML = "3";
     setTimeout(function () {
-        text1.innerHTML = "2";
+        text3.innerHTML = "2";
     }, 1000);
     setTimeout(function () {
-        text1.innerHTML = "1";
+        text3.innerHTML = "1";
     }, 2000);
     setTimeout(function () {
-        text1.innerHTML = "";
+        text3.innerHTML = "";
         snap();
         screenie();
     }, 3000);

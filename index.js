@@ -94,6 +94,11 @@ app.get("/Bingana-ywxL3.ttf", (req, res) => {
     res.status(200).sendFile(__dirname + '/Bingana-ywxL3.ttf');
 });
 
+app.get("/predict", (req, res) => {
+    predict();
+    res.status(200);
+})
+
 app.post("/processImage", (req, res) => {
     let image = req.body.data;
     var base64Data = image.replace(/^data:image\/jpeg;base64,/, "");
