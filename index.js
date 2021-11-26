@@ -110,15 +110,18 @@ app.post("/processImage", (req, res) => {
 
 app.get("/getImage", (req, res) => {
     // Check if client has an image in avatars that need to be removed
-    if (currentImage != "") {
-        fs.unlink('avatars/' + currentImage, (err) => {
-            if (err) {
-                console.error(err)
-                return
-            }
+    fs.readdir(__dirname + '/avatars/', (err, files) => {
+        files.forEach(file => {
+            fs.unlink(__dirname + '/avatars/' + file, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            });
         });
+    });
 
-    }
+    
 
     const dnte = new ThisPersonDoesNotExist();
 
@@ -182,9 +185,30 @@ app.post("/confirm", (req, res) => {
     res.status(200).send("ok");
 });
 
+
 /**
  * Server Activation
  */
 app.listen(port, () => {
     console.log(`Listening to requests on http://localhost:${port}`);
 });
+
+function predict()
+{
+    const spawn = require("child_process").spawn;
+    const pythonProcess = spawn('python3',[__dirname + "/predict.py"]);
+
+
+    pythonProcess.stdout.on('data', (data) => {
+    });
+
+    pythonProcess.stdout.on('end', function () {
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+    });
+
+    pythonProcess.on('error', (error) => {
+        console.error('err: ', error.message);
+    });
+}

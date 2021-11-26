@@ -19,6 +19,14 @@ privatechannel.bind("pusher:subscription_succeeded", () => {
     privatechannel.trigger('client-requestStep', {});
 });
 
+privatechannel.bind("client-labels", (data) => {
+    console.log(data);
+});
+
+privatechannel.bind("client-percentages", (data) => {
+    console.log(data);
+});
+
 channel.bind('newImage', function (data) {
     getNewImage();
 });
@@ -102,6 +110,10 @@ function titleScreen() {
 
     video.style.display = 'none';
     portrait.style.display = 'none';
+
+    // text1.style.display='block';
+    // text2.style.display='block';
+    // text3.style.display='block';
 
 }
 

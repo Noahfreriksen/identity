@@ -5,6 +5,8 @@ body
     background-attachment: fixed;
     background-position: center;
     overflow: hidden;
+    height: 100vh;
+    width: 100vw;
 }
 
 .form
@@ -91,7 +93,7 @@ body
 }
 
 .title {
-    font-family: "Bingana", sans-serif;
+    font-family: "Lucida Handwriting", "Cursive";
     text-align: center;
     color: #FFF;
     display: block;

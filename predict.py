@@ -1,15 +1,13 @@
 import sys
 import socket, time
-import tensorflow as tf
-from keras.models import load_model
-from keras.preprocessing import image
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
 import numpy as np
-from keras.layers import Dense
-from keras.models import Model
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Model
 
 # client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # client_socket.connect(('localhost', 6666))
-print("started listening")
 # while True:
 #     time.sleep(5)
 #     data = client_socket.recv(512)
@@ -24,10 +22,7 @@ print("started listening")
 #         client_socket.close()
 #         break
 
-print("hi")
-sys.stdout.flush()
-
-from keras.models import load_model
+from tensorflow.keras.models import load_model
 base_model = load_model('./facenet_keras.h5')
 
 base_model.layers.pop()
@@ -40,7 +35,7 @@ output = Dense(10, activation='softmax')(x)
 model = Model(inputs=base_model.input, outputs=output)
 model.load_weights("./best_model.h5")
 
-from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 train_datagen = ImageDataGenerator(
     horizontal_flip=True,
     shear_range=0.2,
@@ -59,7 +54,7 @@ training_set = train_datagen.flow_from_directory(
 
 label_map = (training_set.class_indices)
 
-img = image.load_img('/image/image.jpeg', target_size=(160, 160))
+img = image.load_img('./image/image.jpeg', target_size=(160, 160))
 x = image.img_to_array(img)
 x = np.expand_dims(x, axis=0)
 
@@ -88,6 +83,15 @@ second_max_percentage = classes[second_max_index]
 second_min_percentage = classes[second_min_index]
 min_percentage = classes[min_index]
 
-print(max_label, second_max_percentage, second_min_percentage, min_percentage)
+import pusher
+import json
+pusher_client = pusher.Pusher(app_id=u'1302859', key=u'eece33e6915f81081df4', secret=u'688f6801f9a3f7501e99', cluster=u'eu')
+
+labels = [max_label, second_max_label, second_min_label, min_label]
+
+percentages = [max_percentage, second_max_percentage, second_min_percentage, min_percentage]
+
+pusher_client.trigger(u'private-channel', u'client-labels', {'labels': labels})
+pusher_client.trigger(u'private-channel', u'client-percentages', {'labels': str(percentages)})
 
 sys.stdout.flush()
